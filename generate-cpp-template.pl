@@ -118,6 +118,8 @@ sub generate_template {
 	my $right = $options->{right};
 	my $summary = $options->{summary};
 
+    $dir = ($dir =~ /\/$/) ? $dir : $dir."\/";
+
     # ヘッダファイルを作成
     my %arg = (
         type => "h",
