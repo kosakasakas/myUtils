@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use Getopt::Long;
 use utf8;
+use Encode::Guess qw/utf8/;
 
 sub write_template {
     my %arg = @_;
@@ -15,7 +16,7 @@ sub write_template {
         unlink $file_path;
         print "$file_name is deleted!\n";
     }
-    open(FH, ">:utf8", $file_path) || die "cannot open: $!";
+    open(FH, ">", $file_path) || die "cannot open: $!";
     print "writing file: $file_path\n";
     print FH $text;
     print "done.\n";
@@ -39,7 +40,7 @@ sub make_text {
 //  $file_name
 //
 EOT
-    $text .= !(defined $summary) ? "" : "//  $summary\n";
+    $text .= !(defined $summary) ? "" : "//  ${summary}\n";
     $text .= "//\n";
     if (defined $username)
     {
@@ -117,6 +118,7 @@ sub generate_template {
 	my $dir = $options->{dir};
 	my $right = $options->{right};
 	my $summary = $options->{summary};
+    $summary = Encode::decode_utf8($summary);
 
     $dir = ($dir =~ /\/$/) ? $dir : $dir."\/";
 
@@ -130,6 +132,7 @@ sub generate_template {
         namespace => $namespace
     );
     my $text = &make_text( %arg );
+
     %arg = (
         dir => $dir,
         file_name => $class . ".h",
