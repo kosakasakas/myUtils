@@ -70,7 +70,7 @@ EOT
     }
     $text .= "// File Dependencies\n\n";
 
-    if ($type eq "cpp") 
+    if ($type eq "cpp" || $type eq "inl") 
     {
         $text .= "// Implementations\n";
     }
@@ -104,7 +104,7 @@ EOT
         $text .= "#endif /* defined(___INCLUDE_${class}_${type}___) */\n";
     }
 
-    $text .= "/* End Of File */";
+    $text .= "/* End Of File */\n";
     return $text;
 }
 
