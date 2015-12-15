@@ -104,7 +104,7 @@ EOT
         $text .= "#endif /* defined(___INCLUDE_${class}_${type}___) */\n";
     }
 
-    $text .= "/* End Of File */\n";
+    $text .= "/* End Of File */\n\n";
     return $text;
 }
 
